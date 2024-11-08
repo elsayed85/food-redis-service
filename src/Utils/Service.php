@@ -10,7 +10,7 @@ class Service
     public static function getAllServices(): array
     {
         $services = [];
-        $serviceDir = __DIR__ . '/../Services';
+        $serviceDir = __DIR__.'/../Services';
         $namespace = 'Elsayed85\\LmsRedis\Services\\';
         $parentClass = new ReflectionClass(LmsRedis::class);
 

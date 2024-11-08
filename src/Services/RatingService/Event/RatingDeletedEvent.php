@@ -10,7 +10,5 @@ class RatingDeletedEvent extends Event
 {
     public RatingEvent $type = RatingEvent::DELETED;
 
-    public function __construct(public readonly RatingData $data)
-    {
-    }
+    public function __construct(public readonly RatingData $data) {}
 }

@@ -10,6 +10,7 @@ use Elsayed85\LmsRedis\Utils\Enum;
 abstract class LmsRedis
 {
     protected string $allEventsKey = 'events';
+
     protected string $processedEventsKey = 'processed_events';
 
     abstract public function getServiceName(): string;
@@ -55,7 +56,7 @@ abstract class LmsRedis
     {
         $events = Redis::xRange($this->allEventsKey, $start, Carbon::now()->valueOf());
 
-        if (!$events) {
+        if (! $events) {
             return [];
         }
 
@@ -67,7 +68,7 @@ abstract class LmsRedis
     protected function parseEvents(array $redisEvents): array
     {
         return collect($redisEvents)
-            ->map(fn(array $item, string $id) => $this->formatEvent($item, $id))
+            ->map(fn (array $item, string $id) => $this->formatEvent($item, $id))
             ->all();
     }
 

@@ -3,27 +3,28 @@
 namespace Elsayed85\LmsRedis\Console\Commands\Service;
 
 use Elsayed85\LmsRedis\Console\Command;
-use Elsayed85\LmsRedis\Utils\Enum;
 
 class CreateServiceCommand extends Command
 {
     protected string $command = 'make:service name';
+
     protected string $description = 'Create exception class';
+
     protected string $stub = 'exception';
 
     protected function handle($input, $output): int
     {
         $name = $this->validateServiceName($input, $output);
-        if (!$name) {
+        if (! $name) {
             return 1;
         }
 
         $nameLower = strtolower($name);
         $serviceName = $this->getServiceName($name);
-        $baseDir = __DIR__ . '/../../../Services';
-        $dstDir = $baseDir . '/' . $serviceName;
+        $baseDir = __DIR__.'/../../../Services';
+        $dstDir = $baseDir.'/'.$serviceName;
 
-        $this->copyDirectory($baseDir . '/BaseService', $dstDir);
+        $this->copyDirectory($baseDir.'/BaseService', $dstDir);
         $this->renameAndReplaceInFiles($dstDir, $name, $serviceName, $nameLower);
 
         $output->writeln('<info>Service created successfully!</info>');
@@ -46,16 +47,19 @@ class CreateServiceCommand extends Command
     {
         if (preg_match('/^\d/', $name)) {
             $output->writeln('<error>Service name must not start with a number!</error>');
+
             return true;
         }
 
         if (preg_match('/[^A-Za-z0-9]/', $name)) {
             $output->writeln('<error>Service name must not contain special characters!</error>');
+
             return true;
         }
 
         if (str_starts_with($name, 'Redis') || str_starts_with($name, 'redis')) {
             $output->writeln('<error>Service name must not start with Redis or redis!</error>');
+
             return true;
         }
 
@@ -64,10 +68,10 @@ class CreateServiceCommand extends Command
 
     private function renameAndReplaceInFiles(string $dstDir, string $name, string $serviceName, string $nameLower): void
     {
-        $this->renameFiles($dstDir . '/DTO', 'ServiceData', $name . 'Data');
-        $this->renameFiles($dstDir . '/Enum', 'ServiceEvent', $name . 'Event');
+        $this->renameFiles($dstDir.'/DTO', 'ServiceData', $name.'Data');
+        $this->renameFiles($dstDir.'/Enum', 'ServiceEvent', $name.'Event');
         $this->renameEventFiles($dstDir, $name);
-        $this->renameFiles($dstDir, 'RedisService', $name . 'RedisService');
+        $this->renameFiles($dstDir, 'RedisService', $name.'RedisService');
 
         $this->replaceInFiles($dstDir, '{ServiceName}', $name);
         $this->replaceInFiles($dstDir, '{ServiceFullName}', $serviceName);
@@ -78,7 +82,7 @@ class CreateServiceCommand extends Command
     {
         $events = ['Created', 'Updated', 'Deleted'];
         foreach ($events as $event) {
-            $this->renameFiles($dstDir . '/Event', 'Service' . $event . 'Event', $name . $event . 'Event');
+            $this->renameFiles($dstDir.'/Event', 'Service'.$event.'Event', $name.$event.'Event');
         }
     }
 
@@ -92,7 +96,7 @@ class CreateServiceCommand extends Command
         );
 
         foreach ($iterator as $item) {
-            $dstPath = $dst . '/' . $iterator->getSubPathName();
+            $dstPath = $dst.'/'.$iterator->getSubPathName();
             if ($item->isDir()) {
                 mkdir($dstPath);
             } else {
@@ -126,13 +130,13 @@ class CreateServiceCommand extends Command
         foreach ($iterator as $file) {
             if ($file->isFile() && strpos($file->getFilename(), $search) !== false) {
                 $newName = str_replace([$search, '.stub'], [$replace, '.php'], $file->getFilename());
-                rename($file->getRealPath(), $file->getPath() . '/' . $newName);
+                rename($file->getRealPath(), $file->getPath().'/'.$newName);
             }
         }
     }
 
     private function getServiceName(string $name): string
     {
-        return str_ends_with($name, 'Service') ? $name : $name . 'Service';
+        return str_ends_with($name, 'Service') ? $name : $name.'Service';
     }
 }

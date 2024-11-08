@@ -2,19 +2,17 @@
 
 namespace Elsayed85\LmsRedis\Utils;
 
-use Illuminate\Support\Collection;
-
 class Enum
 {
     private static function getEnumFiles(string $enumsNamespace): array
     {
-        $serviceDir = __DIR__ . '/../Services';
+        $serviceDir = __DIR__.'/../Services';
         $files = glob("$serviceDir/*/Enum/*.php");
         $namespacePrefix = 'Elsayed85\\LmsRedis\\Services\\';
 
         $classes = array_map(function ($file) use ($serviceDir, $namespacePrefix) {
-            $relativePath = str_replace([$serviceDir . '/', '/'], ['', '\\'], dirname($file));
-            $className = $namespacePrefix . $relativePath . '\\' . pathinfo($file, PATHINFO_FILENAME);
+            $relativePath = str_replace([$serviceDir.'/', '/'], ['', '\\'], dirname($file));
+            $className = $namespacePrefix.$relativePath.'\\'.pathinfo($file, PATHINFO_FILENAME);
 
             return class_exists($className) ? $className : null;
         }, $files);
@@ -25,9 +23,9 @@ class Enum
     private static function all(): array
     {
         return collect(Service::getAllServices())
-            ->map(fn($service) => self::getEnumFiles(substr($service, 0, strrpos($service, '\\')) . '\\Enum'))
+            ->map(fn ($service) => self::getEnumFiles(substr($service, 0, strrpos($service, '\\')).'\\Enum'))
             ->flatten()
-            ->mapWithKeys(fn($enumClass) => [$enumClass => $enumClass::cases()])
+            ->mapWithKeys(fn ($enumClass) => [$enumClass => $enumClass::cases()])
             ->toArray();
     }
 
