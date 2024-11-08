@@ -1,5 +1,5 @@
 {
-    "name": "elsayed85/lms-redis",
+    "name": "elsayed85/food-redis-service",
     "description": "Build Your MicroService App With Laravel & Redis",
     "keywords": [
         "elsayed85",
@@ -9,7 +9,7 @@
         "microservice",
         "micro-service"
     ],
-    "homepage": "https://github.com/elsayed85/lms-redis",
+    "homepage": "https://github.com/elsayed85/food-redis-service",
     "license": "MIT",
     "authors": [
         {
