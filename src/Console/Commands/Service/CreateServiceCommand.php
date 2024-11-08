@@ -6,7 +6,7 @@ use Elsayed85\LmsRedis\Console\Command;
 
 class CreateServiceCommand extends Command
 {
-    protected string $command = 'make:service name';
+    protected string $command = 'make:redis-service name';
 
     protected string $description = 'Create exception class';
 
