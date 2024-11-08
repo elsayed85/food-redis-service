@@ -9,8 +9,7 @@ class ProductData
         public readonly string $name,
         public readonly string $description,
         public readonly float $price,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

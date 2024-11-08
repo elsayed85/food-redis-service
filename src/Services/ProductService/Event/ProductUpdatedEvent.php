@@ -10,7 +10,5 @@ class ProductUpdatedEvent extends Event
 {
     public ProductEvent $type = ProductEvent::UPDATED;
 
-    public function __construct(public readonly ProductData $data)
-    {
-    }
+    public function __construct(public readonly ProductData $data) {}
 }

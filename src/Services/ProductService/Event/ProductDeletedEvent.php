@@ -10,7 +10,5 @@ class ProductDeletedEvent extends Event
 {
     public ProductEvent $type = ProductEvent::DELETED;
 
-    public function __construct(public readonly ProductData $data)
-    {
-    }
+    public function __construct(public readonly ProductData $data) {}
 }

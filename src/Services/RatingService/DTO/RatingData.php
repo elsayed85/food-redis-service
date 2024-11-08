@@ -8,8 +8,7 @@ class RatingData
         public readonly int $product_id,
         public readonly int $rating,
         public readonly float $averageRating,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

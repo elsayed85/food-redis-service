@@ -10,7 +10,5 @@ class RatingCreatedEvent extends Event
 {
     public RatingEvent $type = RatingEvent::CREATED;
 
-    public function __construct(public readonly RatingData $data)
-    {
-    }
+    public function __construct(public readonly RatingData $data) {}
 }
