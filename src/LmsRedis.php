@@ -5,7 +5,6 @@ namespace Elsayed85\LmsRedis;
 use Carbon\Carbon;
 use Elsayed85\LmsRedis\Facades\Redis;
 use Elsayed85\LmsRedis\Services\Event;
-use Elsayed85\LmsRedis\Utils\Enum;
 
 abstract class LmsRedis
 {
@@ -76,6 +75,7 @@ abstract class LmsRedis
     {
         $event = unserialize($item['event']);
         $event->id = $id;
+
         return $event;
     }
 }
