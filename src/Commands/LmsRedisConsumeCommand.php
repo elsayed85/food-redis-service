@@ -9,7 +9,7 @@ class LmsRedisConsumeCommand extends Command
 {
     public $signature = 'lms:consume';
 
-    public $description = 'Consume events from Redis stream';
+    public $description = 'Consume events from Redis Pub/Sub';
 
     protected LmsRedis $redisService;
 
@@ -19,7 +19,7 @@ class LmsRedisConsumeCommand extends Command
         $this->redisService = $this->getLmsServiceClass();
     }
 
-    private function getLmsServiceClass()
+    private function getLmsServiceClass(): LmsRedis
     {
         $service = config('lms-redis.service');
 
@@ -28,14 +28,12 @@ class LmsRedisConsumeCommand extends Command
 
     public function handle(): void
     {
-        foreach ($this->redisService->getUnprocessedEvents() as $event) {
+        $this->redisService->subscribe(function ($event) {
             match ($event['type']) {
-                // Handel your events here
-                // ProductEvent::CREATED => $this->handelProductCreatedEvent($event),
+                // Handle your events here
+                // ProductEvent::CREATED => $this->handleProductCreatedEvent($event),
                 default => null
             };
-
-            $this->redisService->addProcessedEvent($event);
-        }
+        });
     }
 }
