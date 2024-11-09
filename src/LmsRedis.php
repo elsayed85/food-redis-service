@@ -36,6 +36,7 @@ abstract class LmsRedis
     protected function parseEvent(array $redisMessage): array
     {
         $eventData = json_decode($redisMessage['event'], true);
+
         return array_merge($eventData, [
             'service' => $redisMessage['service'],
             'created_at' => $redisMessage['created_at'],
