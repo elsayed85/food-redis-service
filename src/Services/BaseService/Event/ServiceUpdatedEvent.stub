@@ -10,7 +10,7 @@ class {ServiceName}UpdatedEvent extends Event
 {
     public {ServiceName}Event $type = {ServiceName}Event::UPDATED;
 
-    public function __construct(public readonly {ServiceName}Data $data)
+    public function __construct(public readonly {ServiceName}Data $payload)
     {
     }
 }

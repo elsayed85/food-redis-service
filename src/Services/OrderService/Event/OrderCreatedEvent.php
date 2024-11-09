@@ -10,5 +10,5 @@ class OrderCreatedEvent extends Event
 {
     public OrderEvent $type = OrderEvent::CREATED;
 
-    public function __construct(public readonly OrderData $data) {}
+    public function __construct(public readonly OrderData $payload) {}
 }

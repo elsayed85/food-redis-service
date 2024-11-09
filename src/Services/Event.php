@@ -8,4 +8,9 @@ abstract class Event
     {
         return json_encode($this);
     }
+
+    public function toSerializableString(): string
+    {
+        return serialize($this);
+    }
 }

@@ -23,7 +23,7 @@ abstract class LmsRedis
     public function publish(Event $event): void
     {
         Redis::xadd($this->allEventsKey, '*', [
-            'event' => $event->toJson(),
+            'event' => $event->toSerializableString(),
             'service' => $this->getServiceName(),
             'created_at' => Carbon::now()->valueOf(),
         ]);
