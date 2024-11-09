@@ -5,6 +5,7 @@ namespace Elsayed85\LmsRedis\Services;
 abstract class Event
 {
     public string $id;
+
     public $type;
 
     public function toJson(): string
