@@ -10,7 +10,5 @@ class StockDeletedEvent extends Event
 {
     public StockEvent $type = StockEvent::DELETED;
 
-    public function __construct(public readonly StockData $data)
-    {
-    }
+    public function __construct(public readonly StockData $data) {}
 }

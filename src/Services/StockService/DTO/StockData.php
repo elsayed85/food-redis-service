@@ -7,8 +7,7 @@ class StockData
     public function __construct(
         public readonly string $id,
         public readonly string $name,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {
