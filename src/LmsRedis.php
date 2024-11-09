@@ -9,74 +9,37 @@ use Elsayed85\LmsRedis\Utils\Enum;
 
 abstract class LmsRedis
 {
-    protected string $allEventsKey = 'events';
-
-    protected string $processedEventsKey = 'processed_events';
+    protected string $allEventsChannel = 'events_channel';
 
     abstract public function getServiceName(): string;
 
-    private function getProcessedEventKey(): string
-    {
-        return "{$this->getServiceName()}-{$this->processedEventsKey}";
-    }
-
     public function publish(Event $event): void
     {
-        Redis::xadd($this->allEventsKey, '*', [
+        Redis::publish($this->allEventsChannel, json_encode([
             'event' => $event->toJson(),
             'service' => $this->getServiceName(),
-            'created_at' => Carbon::now()->valueOf(),
-        ]);
+            'created_at' => Carbon::now()->toIso8601String(),
+        ]));
     }
 
-    public function addProcessedEvent(array $event): void
+    public function subscribe(callable $callback): void
     {
-        Redis::rpush($this->getProcessedEventKey(), $event['id']);
+        Redis::subscribe([$this->allEventsChannel], function ($message) use ($callback) {
+            $decodedMessage = json_decode($message, true);
+            if ($decodedMessage && isset($decodedMessage['event'])) {
+                $event = $this->parseEvent($decodedMessage);
+                $callback($event);
+            }
+        });
     }
 
-    public function getUnProcessedEvents(): array
+    protected function parseEvent(array $redisMessage): array
     {
-        $lastProcessedEventId = $this->getLastProcessedEventId() ?: $this->getDefaultStartId();
-        $events = $this->getEventsAfter($lastProcessedEventId);
-
-        return $this->parseEvents($events);
-    }
-
-    private function getLastProcessedEventId(): ?string
-    {
-        return Redis::lindex($this->getProcessedEventKey(), -1);
-    }
-
-    private function getDefaultStartId(): string
-    {
-        return (string) Carbon::now()->subYears(10)->valueOf();
-    }
-
-    protected function getEventsAfter(string $start): array
-    {
-        $events = Redis::xRange($this->allEventsKey, $start, Carbon::now()->valueOf());
-
-        if (! $events) {
-            return [];
-        }
-
-        unset($events[$start]); // Exclude already processed start event
-
-        return $events;
-    }
-
-    protected function parseEvents(array $redisEvents): array
-    {
-        return collect($redisEvents)
-            ->map(fn (array $item, string $id) => $this->formatEvent($item, $id))
-            ->all();
-    }
-
-    private function formatEvent(array $item, string $id): array
-    {
-        return array_merge(json_decode($item['event'], true), [
-            'id' => $id,
-            'type' => Enum::from($item['event']['type']),
+        $eventData = json_decode($redisMessage['event'], true);
+        return array_merge($eventData, [
+            'service' => $redisMessage['service'],
+            'created_at' => $redisMessage['created_at'],
+            'type' => Enum::from($eventData['type']),
         ]);
     }
 }
