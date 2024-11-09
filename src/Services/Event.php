@@ -5,7 +5,6 @@ namespace Elsayed85\LmsRedis\Services;
 abstract class Event
 {
     public string $id;
-
     public function toJson(): string
     {
         return json_encode($this);
@@ -19,10 +18,5 @@ abstract class Event
     public function getEventId(): string
     {
         return $this->id;
-    }
-
-    public function getEventType(): string
-    {
-        return $this->type;
     }
 }
