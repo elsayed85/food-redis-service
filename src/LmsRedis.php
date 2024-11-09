@@ -72,13 +72,10 @@ abstract class LmsRedis
             ->all();
     }
 
-    private function formatEvent(array $item, string $id): array
+    private function formatEvent(array $item, string $id): Event
     {
         $event = unserialize($item['event']);
-
-        return array_merge($event, [
-            'id' => $id,
-            'type' => Enum::from($event['type']),
-        ]);
+        $event->id = $id;
+        return $event;
     }
 }
