@@ -39,6 +39,7 @@ class CreateServiceCommand extends Command
         if ($this->isInvalidName($name, $output)) {
             return null;
         }
+
         return ucfirst($name);
     }
 

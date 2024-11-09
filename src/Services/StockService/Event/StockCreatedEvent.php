@@ -10,7 +10,5 @@ class StockCreatedEvent extends Event
 {
     public StockEvent $type = StockEvent::CREATED;
 
-    public function __construct(public readonly StockData $data)
-    {
-    }
+    public function __construct(public readonly StockData $data) {}
 }
