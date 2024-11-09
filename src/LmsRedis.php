@@ -28,9 +28,9 @@ abstract class LmsRedis
         ]);
     }
 
-    public function addProcessedEvent(array $event): void
+    public function addProcessedEvent(Event $event): void
     {
-        Redis::rpush($this->getProcessedEventKey(), $event['id']);
+        Redis::rpush($this->getProcessedEventKey(), $event->getEventId());
     }
 
     public function getUnProcessedEvents(): array
@@ -75,7 +75,6 @@ abstract class LmsRedis
     {
         $event = unserialize($item['event']);
         $event->id = $id;
-
         return $event;
     }
 }
