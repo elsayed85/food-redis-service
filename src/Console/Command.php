@@ -63,7 +63,7 @@ abstract class Command extends BaseCommand
         }
     }
 
-    protected function execute($input, $output): ?int
+    protected function execute($input, $output): int
     {
         return $this->handle($input, $output);
     }

@@ -1,16 +1,15 @@
 <?php
 
-namespace Elsayed85\LmsRedis\Services\ProductService;
+namespace Elsayed85\LmsRedis\Services\StockService;
 
 use Elsayed85\LmsRedis\LmsRedis;
 use Elsayed85\LmsRedis\Traits\HasEvents;
 
-class ProductRedisService extends LmsRedis
+class StockRedisService extends LmsRedis
 {
     use HasEvents;
-
     public function getServiceName(): string
     {
-        return 'product';
+        return 'stock';
     }
 }
