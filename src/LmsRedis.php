@@ -80,6 +80,7 @@ abstract class LmsRedis
     {
         $event = unserialize($item['event']);
         $event->id = $id;
+
         return $event;
     }
 }
