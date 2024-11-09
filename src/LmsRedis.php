@@ -74,9 +74,10 @@ abstract class LmsRedis
 
     private function formatEvent(array $item, string $id): array
     {
-        return array_merge(json_decode($item['event'], true), [
+        $event = json_decode($item['event'], true);
+        return array_merge($event, [
             'id' => $id,
-            'type' => Enum::from($item['event']['type']),
+            'type' => Enum::from($event['type']),
         ]);
     }
 }
