@@ -12,4 +12,12 @@ class {ServiceName}RedisService extends LmsRedis
     {
         return '{ServiceNameLower}';
     }
+
+    public function processEvent(Event $event) : void
+    {
+        match ($event->type) {
+            // add logic here
+            default => null,
+        };
+    }
 }

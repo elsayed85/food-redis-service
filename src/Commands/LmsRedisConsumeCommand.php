@@ -29,12 +29,7 @@ class LmsRedisConsumeCommand extends Command
     public function handle(): void
     {
         foreach ($this->redisService->getUnprocessedEvents() as $event) {
-            match ($event['type']) {
-                // Handel your events here
-                // ProductEvent::CREATED => $this->handelProductCreatedEvent($event),
-                default => null
-            };
-
+            $this->redisService->processEvent($event);
             $this->redisService->addProcessedEvent($event);
         }
     }

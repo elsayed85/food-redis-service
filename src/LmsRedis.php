@@ -33,6 +33,11 @@ abstract class LmsRedis
         Redis::rpush($this->getProcessedEventKey(), $event->getEventId());
     }
 
+    public function processEvent(Event $event) : void
+    {
+        // Implement your logic here
+    }
+
     public function getUnProcessedEvents(): array
     {
         $lastProcessedEventId = $this->getLastProcessedEventId() ?: $this->getDefaultStartId();
