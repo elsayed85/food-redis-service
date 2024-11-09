@@ -74,7 +74,7 @@ abstract class LmsRedis
 
     private function formatEvent(array $item, string $id): array
     {
-        $event = json_decode($item['event'], true);
+        $event = unserialize($item['event']);
 
         return array_merge($event, [
             'id' => $id,
