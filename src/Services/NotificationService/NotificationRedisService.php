@@ -4,7 +4,6 @@ namespace Elsayed85\LmsRedis\Services\NotificationService;
 
 use Elsayed85\LmsRedis\LmsRedis;
 use Elsayed85\LmsRedis\Traits\HasEvents;
-use Elsayed85\LmsRedis\Services\Event;
 
 class NotificationRedisService extends LmsRedis
 {
