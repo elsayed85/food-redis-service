@@ -8,7 +8,7 @@ class ProductIngredientData
         public readonly int $order_product_id,
         public readonly string $ingredient_id,
         public readonly int $quantity,
-        public readonly floar $remaining_percentage,
+        public readonly float $remaining_percentage,
         public readonly string $status
     ) {}
 
