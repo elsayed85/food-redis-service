@@ -8,6 +8,7 @@ class ProductIngredientData
         public readonly int $order_product_id,
         public readonly string $ingredient_id,
         public readonly int $quantity,
+        public readonly floar $remaining_percentage,
         public readonly string $status
     ) {}
 
@@ -17,6 +18,7 @@ class ProductIngredientData
             order_product_id: $data['order_product_id'],
             ingredient_id : $data['ingredient_id'],
             quantity : $data['quantity'],
+            remaining_percentage : $data['remaining_percentage'],
             status : $data['status']
         );
     }
