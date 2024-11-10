@@ -6,7 +6,7 @@ class ProductIngredientData
 {
     public function __construct(
         public readonly int $order_product_id,
-        public readonly string $ingredient_id,
+        public readonly int $ingredient_id,
         public readonly int $quantity,
         public readonly float $remaining_percentage,
         public readonly string $status
