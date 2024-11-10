@@ -24,7 +24,7 @@ class ProductIngredientData
 
             product_ingredient_id : $data['product_ingredient_id'],
             ingredient_id : $data['ingredient_id'],
-            
+
             quantity : $data['quantity'],
             remaining_percentage : $data['remaining_percentage'],
             status : $data['status']
